@@ -1,7 +1,9 @@
-**/Eurofins Uploads/
-**/IDT Documents/
-**/Figures
-**/Oligos
-**/Outside sequences/
-**/Sequencing Results/
-**/.DS_Store
+# Untracked Folders
+Eurofins\ Uploads/
+Figures/
+IDT\ Documents/
+Oligos/
+Outside\ sequences/
+Sequencing\ Results/
+p2x11.code-workspace
+

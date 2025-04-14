@@ -1,6 +1,7 @@
 import os 
 import copy
 import numpy as np 
+import scipy as sp
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import scipy.stats as stats
@@ -119,7 +120,7 @@ def normalize(group_names:list, groups:list, reads:list, off_set=0.1)->dict:
             norm_data[name]['600_err'] = g['600_err']
     return norm_data
 
-def well_curves(data:dict, time:dict, read:str, size=(20, 15), s=10)->None:
+def well_curves(data:dict, time:dict, read:str, size=(20, 15), s=10, smooth=False)->None:
     """
     Generates a figure where each suplots shows the read curve (designated by read) of each well.
 
@@ -134,7 +135,12 @@ def well_curves(data:dict, time:dict, read:str, size=(20, 15), s=10)->None:
     
     for i in range(data[read].shape[0]):
         for j in range(data[read].shape[1]):
-            axs[i,j].scatter(time[read],data[read][i,j,:],s=s)
+            if smooth != False:
+                axs[i,j].scatter(time[read], 
+                                 sp.signal.savgol_filter(data[read][i,j,:], smooth[0], smooth[1], mode=smooth[2]),
+                                 s=s)
+            else:
+                axs[i,j].scatter(time[read],data[read][i,j,:],s=s)
             
     fig.suptitle(read, size=24)
     fig.supxlabel('Time [Hr.]', size=24)
